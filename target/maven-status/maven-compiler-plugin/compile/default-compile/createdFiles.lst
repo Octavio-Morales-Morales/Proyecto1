@@ -1,0 +1,11 @@
+Model\Rol.class
+Model\Usuario.class
+Model\Recursos.class
+Model\Equipo.class
+Model\Bitacora.class
+IG\EntradaPantalla.class
+IG\MenuPrincipal.class
+Model\Espacio.class
+IG\PantallaEspacios.class
+Model\Reserva.class
+Sistema\app.class
