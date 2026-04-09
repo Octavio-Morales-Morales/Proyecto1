@@ -11,28 +11,45 @@ package Model;
 public class Usuario {
 long idUsuario = 0;   
 String nombreUsuario = "" ;
-String correo ="";
 Rol rolUsuario ;
-boolean activo = false;
+String activo = "";
 
-public Usuario(long idUsuario, String nombreUsuario, String correo, Rol rolUsuario, boolean activo ){
+public Usuario(long idUsuario, String nombreUsuario, Rol rolUsuario, String activo ){
 this.idUsuario = idUsuario;
 this.nombreUsuario = nombreUsuario;
-this.correo = correo;
 this.rolUsuario = rolUsuario;
 this.activo = activo;
     
 }
 
-public boolean activar(boolean activo){
-    if(activo == false){
-        return activo = true;
+  public long getIdUsuario() {
+        return idUsuario;
     }
-    if(activo == true){
-        return activo = false;
+
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
     }
-    return activo;
-}
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+    public Rol getRolUsuario() {
+        return rolUsuario;
+    }
+
+    public void setFechaInicio(Rol rolUsuario) {
+        this.rolUsuario = rolUsuario;
+    }
+    public String getActivo() {
+        return activo ;
+    }
+
+    public void setFechaFin(String activo) {
+        this.activo = activo;
+    }
     
 }  
 

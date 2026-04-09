@@ -8,13 +8,65 @@ package Model;
  *
  * @author moral
  */
-public class Espacio extends Recursos {
+public class Espacio {
+    long idEspacio=0;
+    String NombreEspacio = "";
+    String DescripEspacio = "";
+    String estado = "";
     int capacidad = 0;
     String ubicacion = "";
-    public Espacio(long idRecurso, String NombreRecurso, String DescripRecurso, boolean estado, int capacidad,String ubicacion ) {
-        super(idRecurso, NombreRecurso, DescripRecurso, estado);
+    public Espacio(){}
+    public Espacio(long idEspacio, String NombreEspacio, String DescripEspacio, String estado, int capacidad,String ubicacion ) {
+        this.idEspacio= idEspacio;
+        this.NombreEspacio= NombreEspacio;
+        this.DescripEspacio= DescripEspacio;
+        this.estado= estado;
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
     }
+    
+      public long getIdEspacio() {
+        return idEspacio;
+    }
+
+    public void setIdEspacio(long idEspacio) {
+        this.idEspacio = idEspacio;
+    }
+    public String getNombreEspacio() {
+        return NombreEspacio;
+    }
+
+    public void setNombreEspacio(String NombreEspacio) {
+        this.NombreEspacio = NombreEspacio;
+    }
+    public String getDescripEspacio() {
+        return DescripEspacio;
+    }
+
+    public void setDescripEspacio(String DescripEspacio) {
+        this.DescripEspacio = DescripEspacio;
+    }
+    public String getEstadoEspacio() {
+        return estado;
+    }
+
+    public void setEstadoEspacio(String estado) {
+        this.estado = estado;
+    }
+    public int getCapacidadEspacio() {
+        return capacidad;
+    }
+
+    public void setcapacidadEspacio(int capacidad) {
+        this.capacidad = capacidad;
+    }
+    public String getUbicacionEspacio() {
+        return ubicacion;
+    }
+
+    public void setUbicacionEspacio(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+    
     
 }

@@ -1,3 +1,4 @@
+C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Config\ConexionBD.java
 C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\IG\EntradaPantalla.java
 C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\IG\MenuPrincipal.java
 C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\IG\PantallaEspacios.java
@@ -8,4 +9,10 @@ C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Model\Recursos.java
 C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Model\Reserva.java
 C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Model\Rol.java
 C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Model\Usuario.java
+C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Services\BitacoraDAO.java
+C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Services\EquiposDAO.java
+C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Services\EspaciosDAO.java
+C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Services\ReservasDAO.java
+C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Services\RolesDAO.java
+C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Services\UsuariosDAO.java
 C:\Users\Public\Proyectos Progra2\Proyecto\src\main\java\Sistema\app.java
