@@ -12,14 +12,13 @@ public class Usuario {
 long idUsuario = 0;   
 String nombreUsuario = "" ;
 Rol rolUsuario ;
-String activo = "";
+String contraseña = "";
 
-public Usuario(long idUsuario, String nombreUsuario, Rol rolUsuario, String activo ){
+public Usuario(long idUsuario, String nombreUsuario, String contraseña, Rol rolUsuario ){
 this.idUsuario = idUsuario;
 this.nombreUsuario = nombreUsuario;
-this.rolUsuario = rolUsuario;
-this.activo = activo;
-    
+this.contraseña = contraseña;
+this.rolUsuario = rolUsuario;   
 }
 
   public long getIdUsuario() {
@@ -40,15 +39,15 @@ this.activo = activo;
         return rolUsuario;
     }
 
-    public void setFechaInicio(Rol rolUsuario) {
+    public void setRolUsuario(Rol rolUsuario) {
         this.rolUsuario = rolUsuario;
     }
-    public String getActivo() {
-        return activo ;
+    public String getContraseña() {
+        return contraseña ;
     }
 
-    public void setFechaFin(String activo) {
-        this.activo = activo;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
     
 }  

@@ -4,6 +4,8 @@
  */
 package Model;
 
+import java.util.Date;
+
 /**
  *
  * @author moral
@@ -11,26 +13,27 @@ package Model;
 public class Bitacora {
    long idBitacora = 0;
    Reserva reserva;
-   
+   Date fechaRegistro;
    Usuario usuario;
    String Estado= "";
    String Detalle = " ";
    
    public Bitacora(){}
    
-   public Bitacora(long idBitacora, Reserva reserva, Usuario usuario,String Estado, String Detalle  ){
+   public Bitacora(long idBitacora, Reserva reserva, Usuario usuario,String Estado, String Detalle, Date fechaRegistro  ){
    this.idBitacora = idBitacora;
    this.reserva = reserva;
-
    this.usuario= usuario;
    this.Estado=Estado; 
    this.Detalle= Detalle;
+   this.fechaRegistro = fechaRegistro;
+   
    }
     public long getidBitacora() {
         return idBitacora;
     }
 
-    public void setIdBitacora(int idBitacora) {
+    public void setIdBitacora(long idBitacora) {
         this.idBitacora = idBitacora;
     }
     public Reserva getreservaBitacora() {
@@ -62,7 +65,10 @@ public class Bitacora {
     public void setDetalleBitacora(String Detalle) {
         this.Detalle = Detalle;
     }
-    
-   
+
+    public Date getFechaRegistro() {
+    return reserva.getFechaInicio();
+    }
+
 
 }

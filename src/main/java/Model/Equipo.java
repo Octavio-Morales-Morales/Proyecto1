@@ -15,15 +15,17 @@ public class Equipo{
     String Serie = "";
     String DescripEquipo="";
     String estado= "";
+    Reserva idReserva;
     public Equipo(){}
     
-    public Equipo(long idEquipo, String NombreEquipo, String DescripEquipo, String estado, String marca, String Serie ) {
+    public Equipo(long idEquipo, String NombreEquipo, String DescripEquipo, String estado, String marca, String Serie, Reserva idReserva ) {
         this.idEquipo= idEquipo;
         this.NombreEquipo= NombreEquipo;
         this.DescripEquipo= DescripEquipo;
         this.estado= estado;
         this.marca = marca;
         this.Serie = Serie;
+        this.idReserva = idReserva;
         
     }
       public long getIdEquipo() {
@@ -68,6 +70,14 @@ public class Equipo{
     public void setSerieEquipo(String Serie) {
         this.Serie = Serie;
     }
-    
+    public Reserva getIdReservaEquipo() {
+        return idReserva;
+    }
+
+    public void setIdReservaEquipo(Reserva idReserva) {
+        this.idReserva = idReserva;
+    }
+
+   
     
 }

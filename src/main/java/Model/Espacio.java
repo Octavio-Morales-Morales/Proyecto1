@@ -15,14 +15,16 @@ public class Espacio {
     String estado = "";
     int capacidad = 0;
     String ubicacion = "";
+    Reserva idReserva;
     public Espacio(){}
-    public Espacio(long idEspacio, String NombreEspacio, String DescripEspacio, String estado, int capacidad,String ubicacion ) {
+    public Espacio(long idEspacio, String NombreEspacio, String DescripEspacio, String estado, int capacidad,String ubicacion, Reserva idReserva ) {
         this.idEspacio= idEspacio;
         this.NombreEspacio= NombreEspacio;
         this.DescripEspacio= DescripEspacio;
         this.estado= estado;
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
+        this.idReserva = idReserva;
     }
     
       public long getIdEspacio() {
@@ -67,6 +69,13 @@ public class Espacio {
     public void setUbicacionEspacio(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-    
-    
+             public Reserva getIdReservaEspacio() {
+        return idReserva;
+    }
+
+    public void setIdReservaEspacio(Reserva idReserva) {
+        this.idReserva = idReserva;
+    }
+
+   
 }

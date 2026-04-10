@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Model;
-
+import java.util.Date;
 /**
  *
  * @author moral
@@ -11,12 +11,12 @@ package Model;
 public class Reserva {
     long idReserva =0;
     Usuario usuario ;
-    long fechaInicio = 0;
-    long fechaFin = 0;
+    Date fechaInicio;
+    Date fechaFin;
     String estadoreserva= "";
     String motivo = " ";
     
-public Reserva(long idReserva, Usuario usuario, long fechaInicio, long fechaFin, String estadoreserva, String motivo     ){
+public Reserva(long idReserva, Usuario usuario, Date fechaInicio, Date fechaFin, String estadoreserva, String motivo     ){
   this.idReserva = idReserva;
   this.usuario = usuario;
   this.fechaInicio = fechaInicio;
@@ -39,24 +39,26 @@ public Reserva(long idReserva, Usuario usuario, long fechaInicio, long fechaFin,
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    public long getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(long fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-    public long getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(long fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
     public String getEstadoreserva() {
         return estadoreserva;
     }
-
+   public void setEstadoreserva(String estadoreserva){
+       this.estadoreserva = estadoreserva;
+   }
     public void setcapacidadEspacio(String estadoreserva) {
         this.estadoreserva = estadoreserva;
     }
