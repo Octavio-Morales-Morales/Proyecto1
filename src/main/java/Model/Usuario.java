@@ -12,13 +12,18 @@ public class Usuario {
 long idUsuario = 0;   
 String nombreUsuario = "" ;
 Rol rolUsuario ;
+long IDrolUsuario = 0;
 String contraseña = "";
 
-public Usuario(long idUsuario, String nombreUsuario, String contraseña, Rol rolUsuario ){
+public Usuario(){
+    
+}
+
+public Usuario(long idUsuario, String nombreUsuario, String contraseña, Long IDrolUsuario ){
 this.idUsuario = idUsuario;
 this.nombreUsuario = nombreUsuario;
 this.contraseña = contraseña;
-this.rolUsuario = rolUsuario;   
+this.IDrolUsuario = rolUsuario.getIdRol();   
 }
 
   public long getIdUsuario() {
@@ -35,13 +40,14 @@ this.rolUsuario = rolUsuario;
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
-    public Rol getRolUsuario() {
-        return rolUsuario;
+  
+    public Long getIDRolUsuario() {
+        return IDrolUsuario = rolUsuario.getIdRol();
     }
-
-    public void setRolUsuario(Rol rolUsuario) {
-        this.rolUsuario = rolUsuario;
+    public void setIDRolUsuario(long ID){
+        this.IDrolUsuario = ID;
     }
+    
     public String getContraseña() {
         return contraseña ;
     }
@@ -49,6 +55,6 @@ this.rolUsuario = rolUsuario;
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-    
+   
 }  
 

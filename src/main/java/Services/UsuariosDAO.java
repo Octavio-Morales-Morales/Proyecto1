@@ -5,6 +5,8 @@
 package Services;
 import Config.ConexionBD;
 import Model.Usuario;
+import Model.Rol;
+import Repository.UsuariosRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +15,7 @@ import java.sql.SQLException;
  *
  * @author moral
  */
-public class UsuariosDAO {
+public class UsuariosDAO implements UsuariosRepository {
     public void InsertarUsuario(Usuario usuario) {
         String sql = "INSERT INTO AA_RES_USUARIOS (ID_USUARIO, NOMBRE_USUARIO, CONTRASEÑA_USUARIO, ID_ROL) VALUES (?, ?, ?, ?)";
 
@@ -23,7 +25,7 @@ public class UsuariosDAO {
             ps.setLong(1, usuario.getIdUsuario());
             ps.setString(2, usuario.getNombreUsuario());
             ps.setString(3, usuario.getContraseña());
-            ps.setLong(4, usuario.getRolUsuario().getIdRol());
+            ps.setLong(4, usuario.getIDRolUsuario());
 
             ps.executeUpdate();
             System.out.println("Se insertó el registro del Usuario correctamente.");
@@ -39,9 +41,9 @@ public class UsuariosDAO {
 
             ps.setString(1, usuario.getNombreUsuario());
             ps.setString(2, usuario.getContraseña());
-            ps.setLong(3, usuario.getRolUsuario().getIdRol());
+            ps.setLong(3, usuario.getIDRolUsuario());
             
-            // El ID del usuario va al final para el WHERE
+            
             ps.setLong(4, usuario.getIdUsuario());
 
             int filasActualizadas = ps.executeUpdate();
@@ -77,22 +79,30 @@ public class UsuariosDAO {
             return false;
         }
     }
-    public boolean BusquedaIDUsuario(Usuario usuario) {
-        String sql = "SELECT COUNT(*) FROM AA_RES_USUARIOS WHERE ID_USUARIO = ?";
+    public Usuario validarUsuario(String nombre, String password) {
+        Usuario user = null;
+        String sql = "SELECT ID_USUARIO, NOMBRE_USUARIO, CONTRASEÑA_USUARIO, ID_ROL FROM AA_RES_USUARIOS WHERE NOMBRE_USUARIO = ? AND CONTRASEÑA_USUARIO = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, usuario.getIdUsuario());
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error al consultar DB (Usuarios): " + e.getMessage());
-        }
-        return false;
+        ps.setString(1, nombre);
+        ps.setString(2, password);
+        
+      try (ResultSet rs = ps.executeQuery()) {
+        
+         if (rs.next()) {
+            user = new Usuario();
+            user.setIdUsuario(rs.getLong("ID_USUARIO"));
+            user.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+            user.setContraseña(rs.getString("CONTRASEÑA_USUARIO"));
+            user.setIDRolUsuario(rs.getLong("ID_ROL"));
+         }
+         }
+    } catch (SQLException e) {
+        System.err.println("Error al validar: " + e.getMessage());
     }
+    return user; 
+}
     public void ListaUsuarios() {
         String sql = "SELECT ID_USUARIO, NOMBRE_USUARIO, ID_ROL FROM AA_RES_USUARIOS ORDER BY ID_USUARIO";
 

@@ -6,6 +6,7 @@ package Services;
 import Model.Bitacora;
 
 import Config.ConexionBD;
+import Repository.BitacoraRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
  *
  * @author moral
  */
-public class BitacoraDAO {
+public class BitacoraDAO implements BitacoraRepository {
     
   public void InsertarBitacora(Bitacora bitacora) {
         String sql = "INSERT INTO AA_RES_BITACORA (ID_REGISTRO, ID_RESERVA, ID_USUARIO, ESTADO_RES, DETALLE, FECHA_REGISTRO) VALUES (?, ?, ?, ?, ?,?)";

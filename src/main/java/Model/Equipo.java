@@ -8,47 +8,46 @@ package Model;
  *
  * @author moral
  */
-public class Equipo{
-    long idEquipo=0;
-    String NombreEquipo ="";
+public class Equipo extends Recurso{
+
     String marca = "";
     String Serie = "";
-    String DescripEquipo="";
-    String estado= "";
-    Reserva idReserva;
+  
+   
     public Equipo(){}
     
-    public Equipo(long idEquipo, String NombreEquipo, String DescripEquipo, String estado, String marca, String Serie, Reserva idReserva ) {
-        this.idEquipo= idEquipo;
-        this.NombreEquipo= NombreEquipo;
-        this.DescripEquipo= DescripEquipo;
-        this.estado= estado;
+    public Equipo(long idRecurso, String NombreEquipo, String DescripEquipo, String estado, String marca, String Serie, Reserva idReserva ) {
+        super(idRecurso, NombreEquipo, DescripEquipo, estado);
         this.marca = marca;
         this.Serie = Serie;
-        this.idReserva = idReserva;
+     
         
     }
-      public long getIdEquipo() {
-        return idEquipo;
+    @Override 
+    public String getNombre() {
+        return nombre;
     }
-
-    public void setIdEquipo(long idEquipo) {
-        this.idEquipo = idEquipo;
+    
+    @Override 
+    public void setNombre(String nombre) {
+        this.nombre = nombre; 
     }
-    public String getNombreEquipo() {
-        return NombreEquipo;
+    
+    @Override 
+    public String getDescripcion(){
+        return descripcion; 
     }
-
-    public void setNombreEquipo(String NombreEquipo) {
-        this.NombreEquipo = NombreEquipo;
+  
+    @Override 
+    public String getEstado() {
+        return estado;
     }
-    public String getDescripEquipo() {
-        return DescripEquipo;
+    
+    @Override 
+    public void setEstado(String estado) {
+        this.estado = estado; 
     }
-
-    public void setDescripEquipo(String DescripEquipo) {
-        this.DescripEquipo = DescripEquipo;
-    }
+    
     public String getEstadoEquipo() {
         return estado;
     }
@@ -56,6 +55,7 @@ public class Equipo{
     public void setEstadoEquipo(String estado) {
         this.estado = estado;
     }
+    
     public String getMarcaEquipo() {
         return marca;
     }
@@ -70,13 +70,7 @@ public class Equipo{
     public void setSerieEquipo(String Serie) {
         this.Serie = Serie;
     }
-    public Reserva getIdReservaEquipo() {
-        return idReserva;
-    }
 
-    public void setIdReservaEquipo(Reserva idReserva) {
-        this.idReserva = idReserva;
-    }
 
    
     

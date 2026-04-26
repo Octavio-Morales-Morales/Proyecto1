@@ -5,6 +5,7 @@
 package Services;
 import Config.ConexionBD;
 import Model.Espacio;
+import Repository.EspacioRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,19 +14,17 @@ import java.sql.SQLException;
  *
  * @author moral
  */
-public class EspaciosDAO {
+public class EspaciosDAO implements EspacioRepository{
+    
 public void InsertarEspacio(Espacio espacio) {
-        String sql = "INSERT INTO AA_RES_ESPACIOS (ID_ESPACIO, NOMBRE_ESPACIO, CAPACIDAD, UBICACION_ESPACIO, DESCRIPCION_ESPACIO, ID_RESERVA) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO AAA_ESPACIOS (ID_RECURSO, CAPACIDAD, UBICACION) VALUES (?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, espacio.getIdEspacio());
-            ps.setString(2, espacio.getNombreEspacio());
-            ps.setInt(3, espacio.getCapacidadEspacio()); // Usamos setInt para capacidad
-            ps.setString(4, espacio.getUbicacionEspacio());
-            ps.setString(5, espacio.getDescripEspacio());
-            ps.setLong(6, espacio.getIdReservaEspacio().getIdReserva());
+            ps.setLong(1, espacio.getIdRecurso());
+            ps.setInt(2, espacio.getCapacidadEspacio()); // Usamos setInt para capacidad
+            ps.setString(3, espacio.getUbicacionEspacio());
 
             ps.executeUpdate();
             System.out.println("Se insertó el registro del Espacio correctamente.");
@@ -37,18 +36,15 @@ public void InsertarEspacio(Espacio espacio) {
 
   
     public boolean EditarEspacio(Espacio espacio) {
-        String sql = "UPDATE AA_RES_ESPACIOS SET NOMBRE_ESPACIO = ?, CAPACIDAD = ?, UBICACION_ESPACIO = ?, DESCRIPCION_ESPACIO = ?, ID_RESERVA = ? WHERE ID_ESPACIO = ?";
+        String sql = "UPDATE AAA_ESPACIOS SET ID_RECURSO = ?, CAPACIDAD = ?, UBICACION = ? WHERE ID_RECURSO = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, espacio.getNombreEspacio());
-            ps.setInt(2, espacio.getCapacidadEspacio());
-            ps.setString(3, espacio.getUbicacionEspacio());
-            ps.setString(4, espacio.getDescripEspacio());
-            ps.setLong(5, espacio.getIdReservaEspacio().getIdReserva());
             
-            // El ID del espacio va al final para el WHERE
-            ps.setLong(6, espacio.getIdEspacio());
+            ps.setInt(1, espacio.getCapacidadEspacio());
+            ps.setString(2, espacio.getUbicacionEspacio());
+            
+            ps.setLong(3, espacio.getIdRecurso());
 
             int filasActualizadas = ps.executeUpdate();
             if (filasActualizadas > 0) {
@@ -66,18 +62,18 @@ public void InsertarEspacio(Espacio espacio) {
 
    
     public boolean EliminarEspacio(Espacio espacio) {
-        String sql = "DELETE FROM AA_RES_ESPACIOS WHERE ID_ESPACIO = ?";
+        String sql = "DELETE FROM AAA_ESPACIOS WHERE ID_RECURSO = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
-            ps.setLong(1, espacio.getIdEspacio());
+            ps.setLong(1, espacio.getIdRecurso());
             int filasAfectadas = ps.executeUpdate();
             
             if (filasAfectadas > 0) {
-                System.out.println("Espacio con ID " + espacio.getIdEspacio() + " eliminado correctamente.");
+                System.out.println("Espacio con ID " + espacio.getIdRecurso() + " eliminado correctamente.");
                 return true;
             } else {
-                System.out.println("No se encontró ningún espacio con el ID: " + espacio.getIdEspacio());
+                System.out.println("No se encontró ningún espacio con el ID: " + espacio.getIdRecurso());
                 return false;
             }
         } catch (SQLException e) {
@@ -88,11 +84,11 @@ public void InsertarEspacio(Espacio espacio) {
 
     
     public boolean BusquedaIDEspacio(Espacio espacio) {
-        String sql = "SELECT COUNT(*) FROM AA_RES_ESPACIOS WHERE ID_ESPACIO = ?";
+        String sql = "SELECT COUNT(*) FROM AAA_ESPACIOS WHERE ID_RECURSO = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, espacio.getIdEspacio());
+            ps.setLong(1, espacio.getIdRecurso());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
@@ -106,7 +102,7 @@ public void InsertarEspacio(Espacio espacio) {
 
    
     public void ListaEspacios() {
-        String sql = "SELECT ID_ESPACIO, NOMBRE_ESPACIO, CAPACIDAD, UBICACION_ESPACIO, DESCRIPCION_ESPACIO, ID_RESERVA FROM AA_RES_ESPACIOS ORDER BY ID_ESPACIO";
+        String sql = "SELECT ID_RECURSO, CAPACIDAD, UBICACION FROM AA_RES_ESPACIOS ORDER BY ID_RECURSO";
 
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -116,10 +112,9 @@ public void InsertarEspacio(Espacio espacio) {
             while (rs.next()) {
                 System.out.println(
                     rs.getLong("ID_ESPACIO") + " | " +
-                    rs.getString("NOMBRE_ESPACIO") + " | Cap: " +
                     rs.getInt("CAPACIDAD") + " | " +
-                    rs.getString("UBICACION_ESPACIO") + " | Reserva ID: " +
-                    rs.getLong("ID_RESERVA")
+                    rs.getString("UBICACION_ESPACIO") + " | " 
+   
                 );
             }
 

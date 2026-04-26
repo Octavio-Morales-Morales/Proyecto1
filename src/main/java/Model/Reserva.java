@@ -15,14 +15,16 @@ public class Reserva {
     Date fechaFin;
     String estadoreserva= "";
     String motivo = " ";
+    long RecursoID =0;
     
-public Reserva(long idReserva, Usuario usuario, Date fechaInicio, Date fechaFin, String estadoreserva, String motivo     ){
+public Reserva(long idReserva, Usuario usuario, Date fechaInicio, Date fechaFin, String estadoreserva, String motivo, long RecursoID){
   this.idReserva = idReserva;
   this.usuario = usuario;
   this.fechaInicio = fechaInicio;
   this.fechaFin = fechaFin;
   this.estadoreserva = estadoreserva;
   this.motivo = motivo;
+  this.RecursoID = RecursoID;
   
 }
       public long getIdReserva() {
@@ -70,6 +72,12 @@ public Reserva(long idReserva, Usuario usuario, Date fechaInicio, Date fechaFin,
         this.motivo = motivo;
     }
     
+      public long getRecursoID() {
+        return idReserva;
+    }
 
+    public void setRecursoID(long RecursoID) {
+        this.RecursoID = RecursoID;
+    }
      
 }

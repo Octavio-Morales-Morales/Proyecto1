@@ -5,6 +5,7 @@
 package Services;
 import Config.ConexionBD;
 import Model.Equipo;
+import Repository.EquipoRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,20 +14,18 @@ import java.sql.SQLException;
  *
  * @author moral
  */
-public class EquiposDAO {
+public class EquiposDAO implements EquipoRepository{
     
     public void InsertarEquipo(Equipo equipo) {
-        String sql = "INSERT INTO AA_RES_EQUIPOS (ID_EQUIPO, NOMBRE_EQUIPO, MARCA_EQUIPO, DESCRIPCION_EQUIPO, SERIE_EQUIPO, ID_RESERVA) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO AAA_EQUIPOS (ID_RECURSOS, MARCA, SERIE ) VALUES (?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, equipo.getIdEquipo());
-            ps.setString(2, equipo.getNombreEquipo());
-            ps.setString(3, equipo.getMarcaEquipo());
-            ps.setString(4, equipo.getDescripEquipo());
-            ps.setString(5, equipo.getSerieEquipo());
-            ps.setLong(6, equipo.getIdReservaEquipo().getIdReserva());
+            ps.setLong(1, equipo.getIdRecurso());
+            ps.setString(2, equipo.getMarcaEquipo());
+            ps.setString(3, equipo.getSerieEquipo());
+
 
             ps.executeUpdate();
             System.out.println("Se insertó el registro del Equipo correctamente.");
@@ -36,21 +35,19 @@ public class EquiposDAO {
         }
     }
     public boolean EditarEquipo(Equipo equipo) {
-        String sql = "UPDATE AA_RES_EQUIPOS SET NOMBRE_EQUIPO = ?, MARCA_EQUIPO = ?, DESCRIPCION_EQUIPO = ?, SERIE_EQUIPO = ?, ID_RESERVA = ? WHERE ID_EQUIPO = ?";
+        String sql = "UPDATE AAA_EQUIPOS SET ID_RECURSOS = ?, MARCA = ?,SERIE = ? WHERE ID_RECURSO = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, equipo.getNombreEquipo());
-            ps.setString(2, equipo.getMarcaEquipo());
-            ps.setString(3, equipo.getDescripEquipo());
-            ps.setString(4, equipo.getSerieEquipo());
-            ps.setLong(5, equipo.getIdReservaEquipo().getIdReserva());
             
-            // El ID del equipo va al final para el WHERE
-            ps.setLong(6, equipo.getIdEquipo());
+            ps.setString(1, equipo.getMarcaEquipo());
+            ps.setString(2, equipo.getSerieEquipo());
+            ps.setLong(3, equipo.getIdRecurso());
 
             int filasActualizadas = ps.executeUpdate();
+            
             if (filasActualizadas > 0) {
+                
                 System.out.println("Equipo actualizado correctamente.");
                 return true;
             } else {
@@ -63,18 +60,18 @@ public class EquiposDAO {
         }
     }
     public boolean EliminarEquipo(Equipo equipo) {
-        String sql = "DELETE FROM AA_RES_EQUIPOS WHERE ID_EQUIPO = ?";
+        String sql = "DELETE FROM AAA_EQUIPOS WHERE ID_RECURSOS = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
-            ps.setLong(1, equipo.getIdEquipo());
+            ps.setLong(1, equipo.getIdRecurso());
             int filasAfectadas = ps.executeUpdate();
             
             if (filasAfectadas > 0) {
-                System.out.println("Equipo con ID " + equipo.getIdEquipo() + " eliminado correctamente.");
+                System.out.println("Equipo con ID " + equipo.getIdRecurso() + " eliminado correctamente.");
                 return true;
             } else {
-                System.out.println("No se encontró ningún equipo con el ID: " + equipo.getIdEquipo());
+                System.out.println("No se encontró ningún equipo con el ID: " + equipo.getIdRecurso());
                 return false;
             }
         } catch (SQLException e) {
@@ -82,12 +79,13 @@ public class EquiposDAO {
             return false;
         }
     }
+    
     public boolean BusquedaIDEquipo(Equipo equipo) {
-        String sql = "SELECT COUNT(*) FROM AA_RES_EQUIPOS WHERE ID_EQUIPO = ?";
+        String sql = "SELECT COUNT(*) FROM AAA_EQUIPOS WHERE ID_RECURSOS = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, equipo.getIdEquipo());
+            ps.setLong(1, equipo.getIdRecurso());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
@@ -99,7 +97,7 @@ public class EquiposDAO {
         return false;
     }
     public void ListaEquipos() {
-        String sql = "SELECT ID_EQUIPOS, NOMBRE_EQUIPO, MARCA_EQUIPO, DESCRIPCION_EQUIPO, SERIE_EQUIPO, ID_RESERVA FROM AA_RES_EQUIPO ORDER BY ID_EQUIPO";
+        String sql = "SELECT ID_RECURSOS , MARCA , SERIE FROM AAA_EQUIPOS ORDER BY ID_RECURSOS" ;
 
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -109,10 +107,8 @@ public class EquiposDAO {
             while (rs.next()) {
                 System.out.println(
                     rs.getLong("ID_EQUIPO") + " | " +
-                    rs.getString("NOMBRE_EQUIPO") + " | " +
                     rs.getString("MARCA_EQUIPO") + " | " +
-                    rs.getString("SERIE_EQUIPO") + " | Reserva ID: " +
-                    rs.getLong("ID_RESERVA")
+                    rs.getString("SERIE_EQUIPO") + " | "
                 );
             }
 

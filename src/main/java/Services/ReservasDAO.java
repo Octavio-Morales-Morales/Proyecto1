@@ -6,17 +6,20 @@ package Services;
 import Config.ConexionBD;
 import Config.ConexionBD;
 import Model.Reserva;
+import Repository.ReservaRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
  * @author moral
  */
-public class ReservasDAO {
-    public void InsertarReserva(Reserva reserva) throws SQLException {
+public class ReservasDAO implements ReservaRepository {
+    @Override
+    public void InsertarReserva(Reserva reserva){
         String sql = "INSERT INTO AA_RES_RESERVAS (ID_RESERVA, ID_USUARIO, FECHA_INICIO, FECHA_FIN, ESTADO_RESERVA, MOTIVO_RESERVA) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionBD.conectar();
@@ -123,4 +126,6 @@ public class ReservasDAO {
             System.out.println("Error al listar las Reservas: " + e.getMessage());
         }
     }
+
+ 
 }

@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package IG;
+import Services.UsuariosDAO;
+import Model.Usuario;
+
 import javax.swing.*;
 import java.awt.*;
 import static java.awt.Color.black;
@@ -22,6 +25,7 @@ public class EntradaPantalla extends javax.swing.JFrame {
     private JCheckBox chkVerPassword;
     private JButton btnIngresar;
     private JLabel lblContra;
+    private JButton btnCrearUsuario;
     
     public EntradaPantalla() {
         initComponents();
@@ -30,7 +34,7 @@ public class EntradaPantalla extends javax.swing.JFrame {
        this.setPreferredSize(new Dimension(400,500));
     
        //Objetos
-    lblUsuario = new JLabel("Escriba su Nombre");
+    lblUsuario = new JLabel("Escriba su ID Usuario");
     txtUsuario = new JTextField(15);
     lblContra = new JLabel("Contraseña:");
     contratxt = new JPasswordField(15);
@@ -38,6 +42,8 @@ public class EntradaPantalla extends javax.swing.JFrame {
     chkVerPassword = new JCheckBox("Ver");
     chkVerPassword.setBackground( null);
     btnIngresar = new JButton("Ingresar");
+    btnCrearUsuario = new JButton("Agregar usuario");
+    
     
  //Tamaños
  lblUsuario.setBounds(100,50,200,30);
@@ -46,6 +52,7 @@ public class EntradaPantalla extends javax.swing.JFrame {
  contratxt.setBounds(100, 200, 200, 35);
  chkVerPassword.setBounds(300, 200, 20, 20);
  btnIngresar.setBounds(100, 260, 200, 45);
+ btnCrearUsuario.setBounds(100, 320, 200, 45); 
  
  
     add(lblUsuario);
@@ -54,17 +61,18 @@ public class EntradaPantalla extends javax.swing.JFrame {
     add(btnIngresar);
     add(chkVerPassword);
     add(contratxt);
-    
+    add(btnCrearUsuario);
     pack(); 
     
     //Ingresar
     btnIngresar.addActionListener( e -> {
+    String usuarioInput = txtUsuario.getText().trim();
+    String passInput = new String(contratxt.getPassword());
 
-    MenuPrincipal ventanaMenu = new MenuPrincipal();
-    ventanaMenu.setVisible(true);
-    this.dispose();
-    
-    
+    MenuAdmin AdminMenu = new MenuAdmin();
+    AdminMenu.setVisible(true);
+    this.dispose();   
+ 
     });
     
     
@@ -78,13 +86,18 @@ public class EntradaPantalla extends javax.swing.JFrame {
     contratxt.repaint();
 });
    
+btnCrearUsuario.addActionListener(e -> {
+    CrearUsuario ventanaRegistro = new CrearUsuario(); 
+    ventanaRegistro.setVisible(true);
+    this.dispose(); 
+});  
+
     }    
     
       public void mostrarAlerta(String mensaje){
       JOptionPane.showMessageDialog(this, mensaje, "Validación", JOptionPane.WARNING_MESSAGE);
     }
        
-    
     
     
     

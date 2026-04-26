@@ -8,46 +8,47 @@ package Model;
  *
  * @author moral
  */
-public class Espacio {
-    long idEspacio=0;
-    String NombreEspacio = "";
-    String DescripEspacio = "";
-    String estado = "";
+public class Espacio extends Recurso {
+
     int capacidad = 0;
     String ubicacion = "";
-    Reserva idReserva;
+
     public Espacio(){}
-    public Espacio(long idEspacio, String NombreEspacio, String DescripEspacio, String estado, int capacidad,String ubicacion, Reserva idReserva ) {
-        this.idEspacio= idEspacio;
-        this.NombreEspacio= NombreEspacio;
-        this.DescripEspacio= DescripEspacio;
-        this.estado= estado;
+    public Espacio(long idRecurso, String NombreEspacio, String DescripEspacio, String estado, int capacidad,String ubicacion ) {
+     super(idRecurso, NombreEspacio, DescripEspacio, estado);
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
-        this.idReserva = idReserva;
+      
+        
     }
     
-      public long getIdEspacio() {
-        return idEspacio;
+    @Override 
+    public String getNombre() {
+        return nombre;
     }
-
-    public void setIdEspacio(long idEspacio) {
-        this.idEspacio = idEspacio;
+    
+    @Override 
+    public void setNombre(String nombre) {
+        this.nombre = nombre; 
     }
-    public String getNombreEspacio() {
-        return NombreEspacio;
+    
+    @Override 
+    public String getDescripcion(){
+        return descripcion; 
     }
-
-    public void setNombreEspacio(String NombreEspacio) {
-        this.NombreEspacio = NombreEspacio;
+    
+  
+    
+    @Override 
+    public String getEstado() {
+        return estado;
     }
-    public String getDescripEspacio() {
-        return DescripEspacio;
+    
+    @Override 
+    public void setEstado(String estado) {
+        this.estado = estado; 
     }
-
-    public void setDescripEspacio(String DescripEspacio) {
-        this.DescripEspacio = DescripEspacio;
-    }
+    
     public String getEstadoEspacio() {
         return estado;
     }
@@ -69,13 +70,7 @@ public class Espacio {
     public void setUbicacionEspacio(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-             public Reserva getIdReservaEspacio() {
-        return idReserva;
-    }
 
-    public void setIdReservaEspacio(Reserva idReserva) {
-        this.idReserva = idReserva;
-    }
 
    
 }
