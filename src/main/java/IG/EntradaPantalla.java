@@ -5,13 +5,17 @@
 package IG;
 import Services.UsuariosDAO;
 import Model.Usuario;
-
+import Services.UsuariosDAO;
+import Services.RolesDAO;
+import Model.Rol;
 import javax.swing.*;
 import java.awt.*;
 import static java.awt.Color.black;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.BorderPane;
 
 /**
  *
@@ -19,6 +23,7 @@ import javafx.scene.control.Alert;
  */
 public class EntradaPantalla extends javax.swing.JFrame { 
     
+    private JLabel lblTitulo;
     private JTextField txtUsuario;
     private JLabel lblUsuario; 
     private JPasswordField contratxt;
@@ -34,6 +39,7 @@ public class EntradaPantalla extends javax.swing.JFrame {
        this.setPreferredSize(new Dimension(400,500));
     
        //Objetos
+    lblTitulo = new JLabel("Loggin");
     lblUsuario = new JLabel("Escriba su ID Usuario");
     txtUsuario = new JTextField(15);
     lblContra = new JLabel("Contraseña:");
@@ -42,7 +48,7 @@ public class EntradaPantalla extends javax.swing.JFrame {
     chkVerPassword = new JCheckBox("Ver");
     chkVerPassword.setBackground( null);
     btnIngresar = new JButton("Ingresar");
-    btnCrearUsuario = new JButton("Agregar usuario");
+    
     
     
  //Tamaños
@@ -52,7 +58,6 @@ public class EntradaPantalla extends javax.swing.JFrame {
  contratxt.setBounds(100, 200, 200, 35);
  chkVerPassword.setBounds(300, 200, 20, 20);
  btnIngresar.setBounds(100, 260, 200, 45);
- btnCrearUsuario.setBounds(100, 320, 200, 45); 
  
  
     add(lblUsuario);
@@ -61,18 +66,45 @@ public class EntradaPantalla extends javax.swing.JFrame {
     add(btnIngresar);
     add(chkVerPassword);
     add(contratxt);
-    add(btnCrearUsuario);
     pack(); 
     
+
+
     //Ingresar
     btnIngresar.addActionListener( e -> {
-    String usuarioInput = txtUsuario.getText().trim();
-    String passInput = new String(contratxt.getPassword());
+        
+    String usuarioEntrada = txtUsuario.getText().trim();
+    String contraUsuario = new String(contratxt.getPassword());
+    
+    if (usuarioEntrada.isEmpty() || contraUsuario.isEmpty() ){
+     mostrarAlerta("Complete los espacios. ");
+     return;   
+    }
+    try {
+        
+     long idConvertido = Long.parseLong(usuarioEntrada);
+     
+    UsuariosDAO usuario = new UsuariosDAO();
+    Usuario userValido = usuario.validarUsuario(idConvertido, contraUsuario);
+   
+if (userValido != null) {
+        long rol = userValido.getIDRolUsuario();
+        if (rol == 1) {
+            new MenuAdmin().setVisible(true);
+            this.dispose();
+        } else if (rol == 2) {
+            new MenuPrincipal().setVisible(true);
+            this.dispose();
+        } else {
+            mostrarAlerta("Rol no reconocido (" + rol + "). Contacte al administrador.");
+        }
+    } else {
+        mostrarAlerta("ID de Usuario o Contraseña incorrectos.");
+        }
+    }catch (NumberFormatException ex) {
+        mostrarAlerta("El ID de usuario debe ser numérico.");
 
-    MenuAdmin AdminMenu = new MenuAdmin();
-    AdminMenu.setVisible(true);
-    this.dispose();   
- 
+    }
     });
     
     
@@ -85,12 +117,8 @@ public class EntradaPantalla extends javax.swing.JFrame {
     }
     contratxt.repaint();
 });
-   
-btnCrearUsuario.addActionListener(e -> {
-    CrearUsuario ventanaRegistro = new CrearUsuario(); 
-    ventanaRegistro.setVisible(true);
-    this.dispose(); 
-});  
+ 
+ 
 
     }    
     

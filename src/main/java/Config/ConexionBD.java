@@ -11,11 +11,17 @@ import java.sql.SQLException;
  * @author moral
  */
 public class ConexionBD {
-      private static final String URL = "jdbc:oracle:thin:@localhost:1521:FREEPDB1";
-    private static final String USER = "sys";
+   
+      private static final String URL = "jdbc:oracle:thin:@localhost:1521/FREEPDB1";
+    private static final String USER = "sys as sysdba ";
     private static final String PASSWORD = "1234";
 
     public static Connection conectar() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
-    }  
+try {
+        Class.forName("oracle.jdbc.OracleDriver"); 
+    } catch (ClassNotFoundException e) {
+        System.err.println("Error: No se encontró el driver de Oracle en las dependencias.");
+    }
+    return DriverManager.getConnection(URL, USER, PASSWORD);
+}  
 }

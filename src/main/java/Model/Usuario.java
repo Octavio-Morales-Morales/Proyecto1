@@ -11,7 +11,6 @@ package Model;
 public class Usuario {
 long idUsuario = 0;   
 String nombreUsuario = "" ;
-Rol rolUsuario ;
 long IDrolUsuario = 0;
 String contraseña = "";
 
@@ -19,11 +18,11 @@ public Usuario(){
     
 }
 
-public Usuario(long idUsuario, String nombreUsuario, String contraseña, Long IDrolUsuario ){
+public Usuario(long idUsuario, String nombreUsuario, String contraseña, long IDrolUsuario ){
 this.idUsuario = idUsuario;
 this.nombreUsuario = nombreUsuario;
 this.contraseña = contraseña;
-this.IDrolUsuario = rolUsuario.getIdRol();   
+this.IDrolUsuario = IDrolUsuario;   
 }
 
   public long getIdUsuario() {
@@ -41,8 +40,8 @@ this.IDrolUsuario = rolUsuario.getIdRol();
         this.nombreUsuario = nombreUsuario;
     }
   
-    public Long getIDRolUsuario() {
-        return IDrolUsuario = rolUsuario.getIdRol();
+    public long getIDRolUsuario() {
+        return IDrolUsuario;
     }
     public void setIDRolUsuario(long ID){
         this.IDrolUsuario = ID;

@@ -16,6 +16,7 @@ import java.sql.SQLException;
  * @author moral
  */
 public class UsuariosDAO implements UsuariosRepository {
+    
     public void InsertarUsuario(Usuario usuario) {
         String sql = "INSERT INTO AA_RES_USUARIOS (ID_USUARIO, NOMBRE_USUARIO, CONTRASEÑA_USUARIO, ID_ROL) VALUES (?, ?, ?, ?)";
 
@@ -60,7 +61,8 @@ public class UsuariosDAO implements UsuariosRepository {
         }
     }
     public boolean EliminarUsuario(Usuario usuario) {
-        String sql = "DELETE FROM AA_RES_USUARIOS WHERE ID_USUARIO = ?";
+        String sql = "DELETE FROM AA_RES_USUARIOS"
+                + " WHERE ID_USUARIO = ?";
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
@@ -79,13 +81,16 @@ public class UsuariosDAO implements UsuariosRepository {
             return false;
         }
     }
-    public Usuario validarUsuario(String nombre, String password) {
+    public Usuario validarUsuario(long idUsuario, String password) {
         Usuario user = null;
-        String sql = "SELECT ID_USUARIO, NOMBRE_USUARIO, CONTRASEÑA_USUARIO, ID_ROL FROM AA_RES_USUARIOS WHERE NOMBRE_USUARIO = ? AND CONTRASEÑA_USUARIO = ?";
+        String sql = "SELECT ID_USUARIO, NOMBRE_USUARIO, CONTRASEÑA_USUARIO, ID_ROL "
+                + "FROM AA_RES_USUARIOS "
+                + "WHERE ID_USUARIO = ? AND CONTRASEÑA_USUARIO = ?";
+        
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        ps.setString(1, nombre);
+        ps.setLong(1, idUsuario);
         ps.setString(2, password);
         
       try (ResultSet rs = ps.executeQuery()) {
@@ -98,9 +103,17 @@ public class UsuariosDAO implements UsuariosRepository {
             user.setIDRolUsuario(rs.getLong("ID_ROL"));
          }
          }
-    } catch (SQLException e) {
-        System.err.println("Error al validar: " + e.getMessage());
+      
+} catch (SQLException e) {
+    System.err.println("--- ERROR DE SQL ---");
+    System.err.println("Mensaje: " + e.getMessage());
+    System.err.println("Código de error Oracle: " + e.getErrorCode());
+    System.err.println("Estado SQL: " + e.getSQLState());
+    e.printStackTrace(); // Esto te dirá la línea exacta del error
+}catch (Exception e) {
+        System.err.println("Error inesperado: " + e.getMessage());
     }
+        
     return user; 
 }
     public void ListaUsuarios() {

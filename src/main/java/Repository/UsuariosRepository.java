@@ -16,6 +16,7 @@ public interface UsuariosRepository {
    void InsertarUsuario(Usuario usuario);
    boolean EditarUsuario(Usuario usuario);
    boolean EliminarUsuario(Usuario usuario);
-  Usuario validarUsuario(String nombre, String password);
+  Usuario validarUsuario(long idUsuario, String password);
+  
  
 }

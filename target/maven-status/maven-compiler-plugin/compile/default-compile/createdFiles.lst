@@ -19,9 +19,10 @@ IG\MenuAdmin.class
 Services\BitacoraDAO.class
 Model\Equipo.class
 Repository\UsuariosRepository.class
+IG\PanelReservas.class
 Services\ReservasDAO.class
 Model\Recurso.class
 Services\EquiposDAO.class
-IG\CrearUsuario.class
 Sistema\app.class
 Repository\BitacoraRepository.class
+IG\PanelUsuarios.class
