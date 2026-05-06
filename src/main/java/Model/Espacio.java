@@ -10,11 +10,11 @@ package Model;
  */
 public class Espacio extends Recurso {
 
-    int capacidad = 0;
+    long capacidad = 0;
     String ubicacion = "";
 
     public Espacio(){}
-    public Espacio(long idRecurso, String NombreEspacio, String DescripEspacio, String estado, int capacidad,String ubicacion ) {
+    public Espacio(long idRecurso, String NombreEspacio, String DescripEspacio, String estado, long capacidad,String ubicacion ) {
      super(idRecurso, NombreEspacio, DescripEspacio, estado);
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
@@ -56,11 +56,11 @@ public class Espacio extends Recurso {
     public void setEstadoEspacio(String estado) {
         this.estado = estado;
     }
-    public int getCapacidadEspacio() {
+    public long getCapacidadEspacio() {
         return capacidad;
     }
 
-    public void setcapacidadEspacio(int capacidad) {
+    public void setcapacidadEspacio(long capacidad) {
         this.capacidad = capacidad;
     }
     public String getUbicacionEspacio() {

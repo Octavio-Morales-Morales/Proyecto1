@@ -12,10 +12,10 @@ import IG.EntradaPantalla;
 public class app {
 
     public static void main(String[] args) {
-   
+   // Pantalla de Loggin
     java.awt.EventQueue.invokeLater(() -> {
             EntradaPantalla inicial = new EntradaPantalla();
             inicial.setVisible(true);
-            inicial.setLocationRelativeTo(null); // La centra en la pantalla
+            inicial.setLocationRelativeTo(null); 
         });
 }}

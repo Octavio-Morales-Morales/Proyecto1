@@ -35,6 +35,7 @@ public class UsuariosDAO implements UsuariosRepository {
             System.out.println("Error al registrar Usuario: " + e.getMessage());
         }
     }
+    
     public boolean EditarUsuario(Usuario usuario) {
         String sql = "UPDATE AA_RES_USUARIOS SET NOMBRE_USUARIO = ?, CONTRASEÑA_USUARIO = ?, ID_ROL = ? WHERE ID_USUARIO = ?";
         try (Connection conn = ConexionBD.conectar();
@@ -60,6 +61,7 @@ public class UsuariosDAO implements UsuariosRepository {
             return false;
         }
     }
+    
     public boolean EliminarUsuario(Usuario usuario) {
         String sql = "DELETE FROM AA_RES_USUARIOS"
                 + " WHERE ID_USUARIO = ?";
@@ -81,6 +83,7 @@ public class UsuariosDAO implements UsuariosRepository {
             return false;
         }
     }
+    
     public Usuario validarUsuario(long idUsuario, String password) {
         Usuario user = null;
         String sql = "SELECT ID_USUARIO, NOMBRE_USUARIO, CONTRASEÑA_USUARIO, ID_ROL "
@@ -116,24 +119,22 @@ public class UsuariosDAO implements UsuariosRepository {
         
     return user; 
 }
-    public void ListaUsuarios() {
-        String sql = "SELECT ID_USUARIO, NOMBRE_USUARIO, ID_ROL FROM AA_RES_USUARIOS ORDER BY ID_USUARIO";
-
-        try (Connection conn = ConexionBD.conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            System.out.println("--- LISTADO DE USUARIOS ---");
-            while (rs.next()) {
-                System.out.println(
-                    rs.getLong("ID_USUARIO") + " | " +
-                    rs.getString("NOMBRE_USUARIO") + " | Rol ID: " +
-                    rs.getLong("ID_ROL")
-                );
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error al listar los Usuarios: " + e.getMessage());
+    
+ public java.util.List<Usuario> obtenerListaUsuarios() {
+    java.util.List<Usuario> lista = new java.util.ArrayList<>();
+    String sql = "SELECT ID_USUARIO, NOMBRE_USUARIO, ID_ROL FROM AA_RES_USUARIOS ORDER BY ID_USUARIO";
+    try (Connection conn = ConexionBD.conectar();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            Usuario u = new Usuario();
+            u.setIdUsuario(rs.getLong("ID_USUARIO"));
+            u.setNombreUsuario(rs.getString("NOMBRE_USUARIO"));
+            u.setIDRolUsuario(rs.getLong("ID_ROL"));
+            lista.add(u);
         }
-    }
+    } catch (Exception e) { System.out.println("Error: " + e.getMessage()); }
+    return lista;
+}
+ 
 }

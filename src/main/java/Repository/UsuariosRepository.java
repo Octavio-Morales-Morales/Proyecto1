@@ -5,6 +5,7 @@
 package Repository;
 
 import Model.Usuario;
+import java.util.List;
 
 
 
@@ -17,6 +18,6 @@ public interface UsuariosRepository {
    boolean EditarUsuario(Usuario usuario);
    boolean EliminarUsuario(Usuario usuario);
   Usuario validarUsuario(long idUsuario, String password);
-  
+  List<Usuario> obtenerListaUsuarios();
  
 }

@@ -5,6 +5,7 @@
 package Repository;
 
 import Model.Reserva;
+import java.util.List;
 
 
 /**
@@ -16,6 +17,6 @@ public interface ReservaRepository {
     boolean EditarReserva(Reserva reserva);
     boolean EliminarReserva(Reserva reserva);
     boolean BusquedaIDReserva(Reserva reserva);
-
+    List<Reserva> obtenerListaReservas();
 
 }

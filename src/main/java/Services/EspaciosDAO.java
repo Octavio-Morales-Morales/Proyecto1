@@ -23,7 +23,7 @@ public void InsertarEspacio(Espacio espacio) {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, espacio.getIdRecurso());
-            ps.setInt(2, espacio.getCapacidadEspacio()); // Usamos setInt para capacidad
+            ps.setLong(2, espacio.getCapacidadEspacio()); 
             ps.setString(3, espacio.getUbicacionEspacio());
 
             ps.executeUpdate();
@@ -41,7 +41,7 @@ public void InsertarEspacio(Espacio espacio) {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             
-            ps.setInt(1, espacio.getCapacidadEspacio());
+            ps.setLong(1, espacio.getCapacidadEspacio());
             ps.setString(2, espacio.getUbicacionEspacio());
             
             ps.setLong(3, espacio.getIdRecurso());

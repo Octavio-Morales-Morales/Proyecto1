@@ -13,7 +13,6 @@ import javax.swing.*;
  * @author moral
  */
 public class MenuAdmin extends javax.swing.JFrame {
-     private JLabel lblTitulo;
      private JPanel pnlMenuLateral;
      private JPanel pnlContenidoPrincipal;
      private CardLayout tarjetas;
@@ -24,10 +23,10 @@ public class MenuAdmin extends javax.swing.JFrame {
        setSize(900, 600);
        setLocationRelativeTo(null);
        setLayout(new BorderLayout());
-      initComponentsUsuario();
+      initComponentsAdministrador();
      
     }
-    private void initComponentsUsuario() {
+    private void initComponentsAdministrador() {
      //Panel Lateral
      pnlMenuLateral = new JPanel();
      pnlMenuLateral.setBackground(new Color(45, 52, 71));
@@ -39,12 +38,15 @@ public class MenuAdmin extends javax.swing.JFrame {
      JButton btnReservas = crearBotonMenu("Reservas");
      JButton btnRecursos = crearBotonMenu("Recursos");
      JButton btnBitacora = crearBotonMenu("Bitácora");
-     
+     JButton btnCerrarSesion = crearBotonMenu("Exit");
+     btnCerrarSesion.setBackground(new Color(192, 57, 43));
+      
      pnlMenuLateral.add(new JLabel("  MENÚ ADMIN", JLabel.CENTER)); // Título menú
      pnlMenuLateral.add(btnUsuarios);
      pnlMenuLateral.add(btnReservas);
      pnlMenuLateral.add(btnRecursos);
      pnlMenuLateral.add(btnBitacora);
+     pnlMenuLateral.add(btnCerrarSesion);
        
      //Panel derecho pantallas de edicion 
      tarjetas = new CardLayout();
@@ -54,14 +56,24 @@ public class MenuAdmin extends javax.swing.JFrame {
      pnlContenidoPrincipal.add(crearPanel("Bienvenido", Color.LIGHT_GRAY), "Default");
      pnlContenidoPrincipal.add(new PanelUsuarios(), "Usuarios");
      pnlContenidoPrincipal.add(new PanelReservas(), "Reservas");
-     pnlContenidoPrincipal.add(crearPanel("Inventario de Recursos", Color.LIGHT_GRAY), "Recursos");
-     pnlContenidoPrincipal.add(crearPanel("Bitácora de Sistema", Color.WHITE), "Bitacora");
+     pnlContenidoPrincipal.add(new PanelRecursos(), "Recursos");
+     pnlContenidoPrincipal.add(new PanelBitacora(), "Bitacora");
+     
      
      tarjetas.show(pnlContenidoPrincipal, "Default");
      btnUsuarios.addActionListener(e -> tarjetas.show(pnlContenidoPrincipal, "Usuarios"));
      btnReservas.addActionListener(e -> tarjetas.show(pnlContenidoPrincipal, "Reservas"));
      btnRecursos.addActionListener(e -> tarjetas.show(pnlContenidoPrincipal, "Recursos"));
      btnBitacora.addActionListener(e -> tarjetas.show(pnlContenidoPrincipal, "Bitacora"));
+     btnCerrarSesion.addActionListener(e -> { int respuesta = JOptionPane.showConfirmDialog(this, 
+                "¿Estás seguro de que deseas cerrar sesión?", 
+                "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+            
+            if (respuesta == JOptionPane.YES_OPTION) {
+                cerrarYVolverAlLogin();
+            }
+            });
+     
      
      add(pnlMenuLateral, BorderLayout.WEST);
      add(pnlContenidoPrincipal, BorderLayout.CENTER);
@@ -82,6 +94,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         return panel;
     }
     
+    private void cerrarYVolverAlLogin() {
+        new EntradaPantalla().setVisible(true); 
+       this.dispose();
+    }
     
     
     

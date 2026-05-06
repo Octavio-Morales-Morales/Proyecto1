@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class ReservasDAO implements ReservaRepository {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, reserva.getIdReserva());
-            ps.setLong(2, reserva.getUsuario().getIdUsuario());
+            ps.setLong(2, reserva.getUsuario());
             ps.setDate(3, new java.sql.Date( reserva.getFechaInicio().getTime()));
             ps.setDate(4, new java.sql.Date(reserva.getFechaFin().getTime()));
             
@@ -34,6 +35,7 @@ public class ReservasDAO implements ReservaRepository {
             ps.setString(6, reserva.getMotivoReserva());
 
             ps.executeUpdate();
+            
             System.out.println("Se insertó la Reserva correctamente.");
             
             } catch (Exception e) {
@@ -45,7 +47,7 @@ public class ReservasDAO implements ReservaRepository {
         try (Connection conn = ConexionBD.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setLong(1, reserva.getUsuario().getIdUsuario());
+            ps.setLong(1, reserva.getUsuario());
             ps.setDate(2, new java.sql.Date(reserva.getFechaInicio().getTime()));
             ps.setDate(3, new java.sql.Date(reserva.getFechaFin().getTime()));
             ps.setString(4, reserva.getEstadoreserva());
@@ -104,28 +106,26 @@ public class ReservasDAO implements ReservaRepository {
         }
         return false;
     }
-    public void ListaReservas() {
-        String sql = "SELECT ID_RESERVA, ID_USUARIO, FECHA_INICIO, FECHA_FIN, ESTADO_RESERVA, MOTIVO_RESERVA FROM AA_RES_RESERVAS ORDER BY ID_RESERVA";
-
-        try (Connection conn = ConexionBD.conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            System.out.println("--- LISTADO DE RESERVAS ---");
-            while (rs.next()) {
-                System.out.println(
-                    rs.getLong("ID_RESERVA") + " | Usuario: " +
-                    rs.getLong("ID_USUARIO") + " | Inicio: " +
-                    rs.getDate("FECHA_INICIO") + " | Fin: " +
-                    rs.getDate("FECHA_FIN") + " | " +
-                    rs.getString("ESTADO_RESERVA")
-                );
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error al listar las Reservas: " + e.getMessage());
+    public List<Reserva> obtenerListaReservas() {
+    List<Reserva> lista = new ArrayList<>();
+    String sql = "SELECT * FROM AA_RES_RESERVAS ORDER BY ID_RESERVAS";
+    try (Connection conn = ConexionBD.conectar();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            Reserva r = new Reserva();
+            r.setIdReserva(rs.getLong("ID_RESERVAS"));
+            r.setUsuario(rs.getLong("ID_USUARIO"));
+            r.setFechaInicio(rs.getDate("FECHA_INICIO"));
+            r.setFechaFin(rs.getDate("FECHA_FIN"));
+            r.setEstadoreserva(rs.getString("ESTADO_RESERVA"));
+            r.setMotivoReserva(rs.getString("MOTIVO_RESERVA"));
+            r.setRecursoID(rs.getLong("ID_RECURSOS"));
+            lista.add(r);
         }
-    }
+    } catch (Exception e) { System.out.println("Error: " + e.getMessage()); }
+    return lista;
+}
 
  
 }

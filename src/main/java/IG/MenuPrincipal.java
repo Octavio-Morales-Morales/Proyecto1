@@ -6,70 +6,79 @@ package IG;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import Model.Usuario;
+
+
 /**
  *
  * @author moral
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-//meter roles, para hacer los if 
+
+     private JPanel pnlMenuLateral;
+     private JPanel pnlContenidoPrincipal;
+     private CardLayout tarjetas;
 
     public MenuPrincipal() {
-       
-        initComponents();
-        setTitle("Menu");
-       setSize(600, 400);
+       setTitle("Panel de Usuario - Sistema de Reservas UNA");
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setSize(900, 600);
        setLocationRelativeTo(null);
-      setLayout(new GridLayout(1, 2,20,20));
- JPanel panel1 = CrearPanel("/Recursos/Espacio.jpeg","Opción Espacio", e ->{
-new PantallaEspacios().setVisible(true);
-this.dispose();
- });  
- JPanel panel2 = CrearPanel("/Recursos/Equipo.jpg","Opción Equipo", e ->{
-//new PantallaEspacios().setVisible(true);
-
- }); 
+       setLayout(new BorderLayout());
+      initComponentsUsuario();
+     
+    }
+    private void  initComponentsUsuario(){
+   
+     pnlMenuLateral = new JPanel();
+     pnlMenuLateral.setBackground(new Color(45, 52, 71));
+     pnlMenuLateral.setPreferredSize(new Dimension(200, 0));
+     pnlMenuLateral.setLayout(new GridLayout(10, 1, 0, 5)); 
  
-       add(panel1);
-       add(panel2);
+     JButton btnReservas = crearBotonMenu("Agregar Reserva");
+     JButton btnConsultaRes = crearBotonMenu("Ver Reservas");
+     JButton btnPerfil = crearBotonMenu("Perfil");
+    
+     
+     pnlMenuLateral.add(new JLabel("  MENÚ ", JLabel.CENTER)); 
+     pnlMenuLateral.add(btnReservas);
+     pnlMenuLateral.add(btnConsultaRes);
+     pnlMenuLateral.add(btnPerfil);
+     
+     tarjetas = new CardLayout();
+     pnlContenidoPrincipal = new JPanel(tarjetas);
+     pnlContenidoPrincipal.setBackground(Color.WHITE);
+     
+     pnlContenidoPrincipal.add(crearPanel("Bienvenido", Color.LIGHT_GRAY), "Default");
+     pnlContenidoPrincipal.add(new PanelReserva(), "Reserva");
+     pnlContenidoPrincipal.add(new PanelConsulta(), "Consulta");
+     pnlContenidoPrincipal.add(new PanelPerfil("69", "raul"), "Perfil");
+     
+     tarjetas.show(pnlContenidoPrincipal, "Default");
+     
+     btnReservas.addActionListener(e -> tarjetas.show(pnlContenidoPrincipal, "Reserva"));
+     btnConsultaRes.addActionListener(e -> tarjetas.show(pnlContenidoPrincipal, "Consulta"));
+     btnPerfil.addActionListener(e -> tarjetas.show(pnlContenidoPrincipal, "Perfil"));
+     
+     add(pnlMenuLateral, BorderLayout.WEST);
+     add(pnlContenidoPrincipal, BorderLayout.CENTER);
+   
     }
-    private JPanel CrearPanel(String ruta, String texto, ActionListener accion){
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
-    //Boton
-   JButton boton = CrearBtnImagen(ruta);
-   boton.addActionListener(accion);
-   boton.setAlignmentX(Component.CENTER_ALIGNMENT);
-   //Etiqueta
-   JLabel TP_reserva = new JLabel(texto);
-   TP_reserva.setFont(new Font("Arial",Font.BOLD,16));
-   TP_reserva.setAlignmentX(Component.CENTER_ALIGNMENT);
-   panel.add(Box.createVerticalGlue()); 
-    panel.add(boton);
-    panel.add(Box.createRigidArea(new Dimension(0, 10))); 
-    panel.add(TP_reserva);
-    panel.add(Box.createVerticalGlue());
-       return panel; 
-    }
-    
-    
-    
-    private JButton CrearBtnImagen(String ruta){
-
-        ImageIcon icono = new ImageIcon(getClass().getResource(ruta));
-        Image img = icono.getImage().getScaledInstance(200, -1, Image.SCALE_SMOOTH);
-        JButton boton = new JButton(new ImageIcon(img));
-        boton.setBorderPainted(false);
-        boton.setContentAreaFilled(false);
+    private JButton crearBotonMenu(String texto) {
+        JButton boton = new JButton(texto);
         boton.setFocusPainted(false);
-        
+        boton.setBackground(new Color(60, 70, 92));
+        boton.setForeground(Color.WHITE);
+        boton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         return boton;
-        
+    }
+    private JPanel crearPanel(String titulo, Color color) {
+        JPanel panel = new JPanel();
+        panel.setBackground(color);
+        panel.add(new JLabel("Estás en: " + titulo));
+        return panel;
     }
 
-    
+
     
     
     

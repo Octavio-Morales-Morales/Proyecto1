@@ -4,19 +4,24 @@
  */
 package IG;
 
+import Model.Usuario;
+import Services.UsuariosDAO;
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author moral
  */
 public class PanelUsuarios extends JPanel{
  private JTextField txtId, txtNombre, txtPassword, txtRol;
- private JButton btnAgregar, btnEditar, btnEliminar;
+ private JButton btnAgregar, btnEditar, btnEliminar, btnRefrescar;
  private JTable tablaUsuarios;
  private DefaultTableModel modeloTabla;
+ private UsuariosDAO dao = new UsuariosDAO();
+ private List<Usuario> lista = new ArrayList<>();
  
     public PanelUsuarios() {
        setLayout(new BorderLayout(15, 15));
@@ -24,6 +29,8 @@ public class PanelUsuarios extends JPanel{
        
        initFormulario();
        initTabla();
+       configurarEventos();
+      cargarDatosTabla();
        
     }
 
@@ -64,16 +71,92 @@ public class PanelUsuarios extends JPanel{
         
 
         private void initTabla() {
-         String[] columnas = {"ID", "Nombre", "Rol"};
+        JPanel pnlCabeceraTabla = new JPanel(new BorderLayout());
+        JLabel lblTitulo = new JLabel("Lista de Usuarios Registrados");
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 12));
+        
+        btnRefrescar = new JButton(" Refrescar");
+        pnlCabeceraTabla.add(lblTitulo, BorderLayout.WEST);
+        pnlCabeceraTabla.add(btnRefrescar, BorderLayout.EAST);
+
+        String[] columnas = {"ID", "Nombre", "Rol"};
         modeloTabla = new DefaultTableModel(columnas, 0);
         tablaUsuarios = new JTable(modeloTabla);
-        
-        // ScrollPane para que la tabla tenga barras y cabecera
-        JScrollPane scroll = new JScrollPane(tablaUsuarios);
-        scroll.setBorder(BorderFactory.createTitledBorder("Lista de Usuarios Registrados"));
 
-        add(scroll, BorderLayout.CENTER);
+        JPanel pnlDerecho = new JPanel(new BorderLayout(5, 5));
+        pnlDerecho.add(pnlCabeceraTabla, BorderLayout.NORTH);
+        pnlDerecho.add(new JScrollPane(tablaUsuarios), BorderLayout.CENTER);
+
+        add(pnlDerecho, BorderLayout.CENTER);
+    }
+          private void cargarDatosTabla() {
+        modeloTabla.setRowCount(0);
+        
+     lista = dao.obtenerListaUsuarios();
+        for (Usuario u : lista) {
+            modeloTabla.addRow(new Object[]{u.getIdUsuario(), u.getNombreUsuario(), u.getIDRolUsuario()});
+        }
+          }
+          
+        private void configurarEventos(){
+            
+           btnAgregar.addActionListener(e -> {
+               
+            Usuario usuario = new Usuario();
+            usuario.setIdUsuario(Long.parseLong(txtId.getText()));
+            usuario.setNombreUsuario(txtNombre.getText());
+            usuario.setContraseña(txtPassword.getText());
+            usuario.setIDRolUsuario(Long.parseLong(txtRol.getText()));
+            
+            dao.InsertarUsuario(usuario);
+            cargarDatosTabla();
+            limpiarCampos();
+            
+        });
+
+        btnEditar.addActionListener(e -> {
+            Usuario u = new Usuario();
+            u.setIdUsuario(Long.parseLong(txtId.getText()));
+            u.setNombreUsuario(txtNombre.getText());
+            u.setContraseña(txtPassword.getText());
+            u.setIDRolUsuario(Long.parseLong(txtRol.getText()));
+            
+            if(dao.EditarUsuario(u)) {
+                JOptionPane.showMessageDialog(this, "Usuario Actualizado");
+                cargarDatosTabla();
+            }
+        });
+
+        btnEliminar.addActionListener(e -> {
+            Usuario u = new Usuario();
+            u.setIdUsuario(Long.parseLong(txtId.getText()));
+            if(dao.EliminarUsuario(u)) {
+                cargarDatosTabla();
+                limpiarCampos();
+            }
+        });
+
+        btnRefrescar.addActionListener(e -> cargarDatosTabla());
+        
+        tablaUsuarios.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && tablaUsuarios.getSelectedRow() != -1) {
+                int fila = tablaUsuarios.getSelectedRow();
+                txtId.setText(modeloTabla.getValueAt(fila, 0).toString());
+                txtNombre.setText(modeloTabla.getValueAt(fila, 1).toString());
+                txtRol.setText(modeloTabla.getValueAt(fila, 2).toString());
+            }
+        });
+        }
+
+    private void limpiarCampos() {
+        txtId.setText("");
+        txtNombre.setText("");
+        txtPassword.setText("");
+        txtRol.setText("");
     }
 
+    
+
 }
+
 

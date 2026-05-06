@@ -10,14 +10,18 @@ import java.util.Date;
  */
 public class Reserva {
     long idReserva =0;
-    Usuario usuario ;
+    long usuario ;
     Date fechaInicio;
     Date fechaFin;
     String estadoreserva= "";
     String motivo = " ";
     long RecursoID =0;
+
+    public Reserva(){
+        
+    }
     
-public Reserva(long idReserva, Usuario usuario, Date fechaInicio, Date fechaFin, String estadoreserva, String motivo, long RecursoID){
+public Reserva(long idReserva, long usuario, Date fechaInicio, Date fechaFin, String estadoreserva, String motivo, long RecursoID){
   this.idReserva = idReserva;
   this.usuario = usuario;
   this.fechaInicio = fechaInicio;
@@ -34,11 +38,11 @@ public Reserva(long idReserva, Usuario usuario, Date fechaInicio, Date fechaFin,
     public void setIdReserva(long idReserva) {
         this.idReserva = idReserva;
     }
-    public Usuario getUsuario() {
+    public long getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(long usuario) {
         this.usuario = usuario;
     }
     public Date getFechaInicio() {

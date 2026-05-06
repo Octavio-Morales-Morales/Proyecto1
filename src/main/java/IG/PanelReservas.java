@@ -4,6 +4,7 @@
  */
 package IG;
 
+import Services.ReservasDAO;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,12 +19,15 @@ private JDateChooser jdFechaInicio, jdFechaFin;
 private JButton btnAgregar, btnEditar, btnEliminar;
 private JTable tablaReservas;
 private DefaultTableModel modeloTabla;
+private ReservasDAO dao = new ReservasDAO();
 
     public PanelReservas() {
         setLayout(new BorderLayout(15, 15));
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         initFormulario();
         initTabla();
+       // configurarEventos();
+       //cargarDatosTabla();
     }
 
     private void initFormulario() {
